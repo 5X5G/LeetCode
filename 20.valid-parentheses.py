@@ -4,26 +4,19 @@
 # [20] Valid Parentheses
 #
 
-s="AB"
-print(s[1:2])
+"""
+栈思想
+"""
 
 class Solution:
-    def isValid(self, s: str) -> bool:
+    def isValid(self, s: str) -> bool:    
         s = s.replace('"',"")
-        strMap = {"(":")", "{":"}", "[":"]"}         
-        if(len(s)%2 >0):
-            return False
-        index = 0
-        while index < len(s):
-            if s[index] != strMap[s[0]]:
-                index += 1
-                continue
+        strMap = {")":"(", "}":"{", "]":"["}         
+        stackList = []
+        for char in s:
+            if(strMap.get(char)):
+                if not (stackList and stackList.pop() == strMap[char]):
+                    return False
             else:
-                s = s[1:index]+s[-(len(s)-1-index):]
-                index = 0
-        if(index == len(s)-1):
-            return False
-        return True
-
-so= Solution()
-so.isValid("()")
+                stackList.append(char)
+        return not stackList
